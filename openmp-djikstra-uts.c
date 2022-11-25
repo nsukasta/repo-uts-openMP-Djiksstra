@@ -18,36 +18,7 @@ void update_mind(int s, int e, int mv, int connected[NV], int ohd[NV][NV],
 
 int main(int argc, char **argv)
 
-/******************************************************************************/
-/*
-  Purpose:
 
-    MAIN runs an example of Dijkstra's minimum distance algorithm.
-
-  Discussion:
-
-    Given the distance matrix that defines a graph, we seek a list
-    of the minimum distances between node 0 and all other nodes.
-
-    This program sets up a small example problem and solves it.
-
-    The correct minimum distances are:
-
-      0   35   15   45   49   41
-
-  Licensing:
-
-    This code is distributed under the GNU LGPL license.
-
-  Modified:
-
-    01 July 2010
-
-  Author:
-
-    Original C version by Norm Matloff, CS Dept, UC Davis.
-    This C version by John Burkardt.
-*/
 {
   int i;
   int i4_huge = 2147483647;
@@ -56,21 +27,7 @@ int main(int argc, char **argv)
   int ohd[NV][NV];
   double start, delta;
 
-  //  timestamp ( );
-  /* fprintf ( stdout, "\n" );
-   fprintf ( stdout, "DIJKSTRA_OPENMP\n" );
-   fprintf ( stdout, "  C version\n" );
-   fprintf ( stdout, "  Use Dijkstra's algorithm to determine the minimum\n" );
-   fprintf ( stdout, "  distance from node 0 to each node in a graph,\n" );
-   fprintf ( stdout, "  given the distances between each pair of nodes.\n" );
-   fprintf ( stdout, "\n" );
-   fprintf ( stdout, "  Although a very small example is considered, we\n" );
-   fprintf ( stdout, "  demonstrate the use of OpenMP directives for\n" );
-   fprintf ( stdout, "  parallel execution.\n" );
- */
-  /*
-    Initialize the problem data.
-  */
+  
   init(ohd);
   /*
     Print the distance matrix.
@@ -117,12 +74,7 @@ int main(int argc, char **argv)
     Free memory.
   */
   free(mind);
-  /*
-    Terminate.
-  */
-  //  fprintf ( stdout, "\n" );
-  //  fprintf ( stdout, "DIJKSTRA_OPENMP\n" );
-  //  fprintf ( stdout, " Normal end of execution.\n" );
+
 
   fprintf(stdout, "\n");
   delta = omp_get_wtime() - start;
@@ -137,48 +89,7 @@ int main(int argc, char **argv)
 int *dijkstra_distance(int ohd[NV][NV])
 
 /******************************************************************************/
-/*
-  Purpose:
 
-    DIJKSTRA_DISTANCE uses Dijkstra's minimum distance algorithm.
-
-  Discussion:
-
-    We essentially build a tree.  We start with only node 0 connected
-    to the tree, and this is indicated by setting CONNECTED[0] = 1.
-
-    We initialize MIND[I] to the one step distance from node 0 to node I.
-
-    Now we search among the unconnected nodes for the node MV whose minimum
-    distance is smallest, and connect it to the tree.  For each remaining
-    unconnected node I, we check to see whether the distance from 0 to MV
-    to I is less than that recorded in MIND[I], and if so, we can reduce
-    the distance.
-
-    After NV-1 steps, we have connected all the nodes to 0, and computed
-    the correct minimum distances.
-
-  Licensing:
-
-    This code is distributed under the GNU LGPL license.
-
-  Modified:
-
-    02 July 2010
-
-  Author:
-
-    Original C version by Norm Matloff, CS Dept, UC Davis.
-    This C version by John Burkardt.
-
-  Parameters:
-
-    Input, int OHD[NV][NV], the distance of the direct link between
-    nodes I and J.
-
-    Output, int DIJKSTRA_DISTANCE[NV], the minimum distance from
-    node 0 to each node.
-*/
 {
   int *connected;
   int i;
@@ -574,49 +485,7 @@ void update_mind(int s, int e, int mv, int connected[NV], int ohd[NV][NV],
                  int mind[NV])
 
 /******************************************************************************/
-/*
-  Purpose:
 
-    UPDATE_MIND updates the minimum distance vector.
-
-  Discussion:
-
-    We've just determined the minimum distance to node MV.
-
-    For each unconnected node I in the range S to E,
-    check whether the route from node 0 to MV to I is shorter
-    than the currently known minimum distance.
-
-  Licensing:
-
-    This code is distributed under the GNU LGPL license.
-
-  Modified:
-
-    02 July 2010
-
-  Author:
-
-    Original C version by Norm Matloff, CS Dept, UC Davis.
-    This C version by John Burkardt.
-
-  Parameters:
-
-    Input, int S, E, the first and last nodes that are to be checked.
-
-    Input, int MV, the node whose minimum distance to node 0
-    has just been determined.
-
-    Input, int CONNECTED[NV], is 1 for each connected node, whose
-    minimum distance to node 0 has been determined.
-
-    Input, int OHD[NV][NV], the distance of the direct link between
-    nodes I and J.
-
-    Input/output, int MIND[NV], the currently computed minimum distances
-    from node 0 to each node.  On output, the values for nodes S through
-    E have been updated.
-*/
 {
   int i;
   int i4_huge = 2147483647;
